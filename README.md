@@ -1,8 +1,8 @@
-#### Healing Hand - Medicare App for Bartholomew's Hospital
+# Healing Hand - Medicare App for Bartholomew's Hospital
 
 ## Overview:
 
-Healing Hand is a comprehensive healthcare application developed for Bartholomew's Hospital, providing a secure and user-friendly platform for both doctors and patients. The app offers essential features for scheduling appointments, accessing medical records, and facilitating seamless communication between healthcare providers and patients.
+### Healing Hand is a comprehensive healthcare application developed for Bartholomew's Hospital, providing a secure and user-friendly platform for both doctors and patients. The app offers essential features for scheduling appointments, accessing medical records, and facilitating seamless communication between healthcare providers and patients.
 
 Basic Features:
 1. Secure Login:
