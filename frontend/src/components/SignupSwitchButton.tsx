@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+//@ts-nocheck
+import  { useState } from "react";
 import { UserAuthsignup } from "./UserAuthsignup";
 import { DoctorAuthsignup } from "./DoctorAuthsignup";
+import { Googlebutton } from "./Googlebutton";
 export const SignupSwitchButton = () => {
   const [button, SetButton] = useState(0);
   if (button == 0) {
@@ -27,6 +29,9 @@ export const SignupSwitchButton = () => {
           </button>
         </div>
         <DoctorAuthsignup />
+        <div className="flex justify-center">
+          <Googlebutton type={"signup"} link={"/doctor/signup"} />
+        </div>
       </div>
     );
   } else {
@@ -53,6 +58,9 @@ export const SignupSwitchButton = () => {
           </button>
         </div>
         <UserAuthsignup />
+        <div className="flex justify-center">
+          <Googlebutton type={"signup"} link={"/user/signup"} />
+        </div>
       </div>
     );
   }

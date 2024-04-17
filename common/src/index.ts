@@ -1,10 +1,10 @@
 import z from "zod";
 
-export const UsersignupInput = z.object({
+export const PatientsignupInput = z.object({
     FirstName: z.string(),
     LastName:z.string(),
     Email: z.string().email(),
-    Phone:z.number(),
+    Phone:z.string(),
     Password: z.string().min(6),
     address: z.object({
         street: z.string(),
@@ -14,21 +14,21 @@ export const UsersignupInput = z.object({
     }).optional(),
 });
 
-export type UserSignupInput = z.infer<typeof UsersignupInput>
+export type PatientSignupInput = z.infer<typeof PatientsignupInput>
 
-export const UsersigninInput = z.object({
+export const PatientsigninInput = z.object({
     Email: z.string().email(),
     Password: z.string().min(6),
 })
 
-export type UserSigninInput = z.infer<typeof UsersigninInput>
+export type PatientsigninInput = z.infer<typeof PatientsigninInput>
 
 
 export const DoctorsignupInput = z.object({
     FirstName: z.string(),
     LastName:z.string(),
     Email: z.string().email(),
-    Phone:z.number(),
+    Phone:z.string(),
     Password: z.string().min(6),
     address: z.object({
         street: z.string(),

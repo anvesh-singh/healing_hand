@@ -21,9 +21,13 @@ export const DoctorAuthsignup = () => {
         `${BACKEND_URL}/doctor/signup`,
         postInputs
       );
-      const jwt =  response.data.jwt;
-      localStorage.setItem("token", jwt);
-      navigate("/profile");
+      if (response.status == 202) {
+        alert(response.data.msg);
+      } else {
+        const jwt = response.data.jwt;
+        localStorage.setItem("token", jwt);
+        navigate("/profile");
+      }
     } catch (e) {
       alert("Error while signing up");
       // alert the user here that the request failed

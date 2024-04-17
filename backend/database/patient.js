@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-// mongoose.connect("mongodb+srv://anveshsingh444:Anveshsingh01@cluster0.9hupwlq.mongodb.net/HEALING_HAND");
+mongoose.connect(process.env.BACKEND_URL);
 const patientSchema = new mongoose.Schema({
     FirstName: {
         type: String,
@@ -15,7 +15,7 @@ const patientSchema = new mongoose.Schema({
         unique: true
     },
     Phone: {
-        type: Number,
+        type: String,
         required: true
     },
     Password: {

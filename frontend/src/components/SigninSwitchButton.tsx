@@ -1,6 +1,8 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import { UserAuthsignin } from "./UserAuthsignin";
 import { DoctorAuthsignin } from "./DoctorAuthsignin";
+import { Googlebutton } from "./Googlebutton";
 export const SigninSwitchButton = () => {
   const [button, SetButton] = useState(0);
   if (button == 0) {
@@ -27,6 +29,9 @@ export const SigninSwitchButton = () => {
           </button>
         </div>
         <DoctorAuthsignin />
+        <div className="flex justify-center">
+          <Googlebutton type={"signin"} link={"/doctor/signin"} />
+        </div>
       </div>
     );
   } else {
@@ -53,6 +58,9 @@ export const SigninSwitchButton = () => {
           </button>
         </div>
         <UserAuthsignin />
+        <div className="flex justify-center">
+          <Googlebutton type={"signin"} link={"/user/signin"} />
+        </div>
       </div>
     );
   }

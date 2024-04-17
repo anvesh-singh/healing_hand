@@ -5,7 +5,7 @@ import { Signin } from './pages/Signin'
 import { SearchBar } from './components/SearchBar'
 import { NavBar } from './components/NavBar'
 import { Profile } from './pages/Profile'
-import { Appointments } from './components/Appointments'
+import { Appointments } from './pages/Appointments'
 import { Rating } from './components/Rating'
 function App() {
 

@@ -13,13 +13,19 @@ export const DoctorAuthsignin = () => {
 
   async function sendRequest() {
     try {
+      console.log(postInputs);
       const response = await axios.post(
         `${BACKEND_URL}/doctor/signin`,
         postInputs
       );
-      const jwt = response.data;
-      localStorage.setItem("token", jwt);
-      navigate("/blogs");
+      if (response.status == 202) {
+        alert(response.data.msg);
+      } else {
+        const jwt = response.data.jwt;
+        localStorage.setItem("token", jwt);
+        console.log(jwt);
+        // navigate("/");
+      }
     } catch (e) {
       alert("Error while signing up");
       // alert the user here that the request failed
@@ -31,7 +37,9 @@ export const DoctorAuthsignin = () => {
       <div className="flex justify-center">
         <div>
           <div className="px-10">
-            <div className="text-3xl font-extrabold pl-10">Sign In as Doctor</div>
+            <div className="text-3xl font-extrabold pl-10">
+              Sign In as Doctor
+            </div>
             <div className="text-slate-500  ">
               Don't have an account?
               <Link className="pl-2 underline" to="/signup">

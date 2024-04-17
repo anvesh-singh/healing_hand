@@ -1,4 +1,4 @@
-import { Profilecard } from "../components/Profilecard";
+import { Profilecard } from "./Profilecard";
 export const Profile=()=>{
     return (<Profilecard/>)
 }

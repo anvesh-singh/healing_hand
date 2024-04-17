@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const userRouter = require("./userrouter");
-const doctorrouter = require("./doctorrouter");
-router.use("/user", userRouter);
-router.use("/doctor",doctorrouter);
+const PatientRouter = require("./Patientrouter");
+const Doctorrouter = require("./Doctorrouter");
+router.use("/user",PatientRouter);
+router.use("/doctor",Doctorrouter);
 module.exports = router;

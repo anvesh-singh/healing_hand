@@ -4,11 +4,13 @@
   "description": "backend",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "start":" --env-file=.env index.js"
   },
   "author": "TEAM_SAGS",
   "license": "ISC",
   "dependencies": {
+    "@anvesh-singh/common": "^1.0.4",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
