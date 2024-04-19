@@ -32,7 +32,11 @@ const doctorSchema = new mongoose.Schema({
     appointments: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Appointment'
-        }]
+        }],
+    rating:{
+        avgrating:Number,
+        totalrating:Number
+    }
 });
  const Doctor = mongoose.model('Doctor', doctorSchema);
  module.exports={Doctor}

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const Appointment = require("../database/appointment");
 const { PatientsignupInput } = require("@anvesh-singh/common");
 const { PatientsigninInput } = require("@anvesh-singh/common");
+const bcyrpt = require("bcrypt");
 
 Patientrouter.post("/signup", async (req, res) => {
   const body = req.body;
@@ -17,6 +18,8 @@ Patientrouter.post("/signup", async (req, res) => {
   } else {
     const isSafe = PatientsignupInput.safeParse(body);
     if (isSafe.success) {
+      const salt = await bcyrpt.genSalt(10);
+      body.Password = await bcyrpt.hash(body.Password, salt);
       const user = await Patient.create(body);
       const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       return res.status(211).json({
@@ -32,7 +35,7 @@ Patientrouter.post("/signup", async (req, res) => {
 
 Patientrouter.post("/signin", async (req, res) => {
   const body = req.body;
-  const exists = await Patient.findOne({Email:body.Email});
+  const exists = await Patient.findOne({ Email: body.Email });
   if (!exists) {
     return res.status(202).json({
       msg: "Please Sign up",
@@ -41,11 +44,16 @@ Patientrouter.post("/signin", async (req, res) => {
     const isSafe = PatientsigninInput.safeParse(body);
 
     if (isSafe.success) {
-      const token = jwt.sign({ id: exists._id}, process.env.JWT_SECRET);
-      return res.status(211).json({
-        jwt: token,
-      });
-      
+      if (bcyrpt.compare(body.Password, exists.Password)) {
+        const token = jwt.sign({ id: exists._id }, process.env.JWT_SECRET);
+        return res.status(211).json({
+          jwt: token,
+        });
+      } else {
+        return res.status(202).json({
+          msg: "incorrect password",
+        });
+      }
     } else {
       return res.status(202).json({
         msg: "email/password incorrect",
