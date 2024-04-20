@@ -5,12 +5,16 @@ const pdf = require("html-pdf");
 const { Doctor } = require("../database/doctors");
 const pdftemplate = require("../documents/index");
 const bcrypt = require("bcrypt");
+
 const {
   DoctorsignupInput,
   DoctorsigninInput,
 } = require("@anvesh-singh/common");
+
 const bodyParser = require("body-parser");
+
 Doctorrouter.use(bodyParser.urlencoded({ extended: true }));
+
 Doctorrouter.post("/signup", async (req, res) => {
   const body = req.body;
   const exists = await Doctor.findOne({ Email: body.Email });
@@ -26,7 +30,7 @@ Doctorrouter.post("/signup", async (req, res) => {
       const user = await Doctor.create(body);
       const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       return res.status(211).json({
-        jwt: token,
+        jwt: `doctor ${token}`,
       });
     } else {
       res.status(202).json({
@@ -46,10 +50,10 @@ Doctorrouter.post("/signin", async (req, res) => {
   } else {
     const isSafe = DoctorsigninInput.safeParse(body);
     if (isSafe.success) {
-      if (bcyrpt.compare(body.Password, exists.Password)) {
+      if (bcrypt.compare(body.Password, exists.Password)) {
         const token = jwt.sign({ id: exists._id }, process.env.JWT_SECRET);
         return res.status(211).json({
-          jwt: token,
+          jwt: `doctor ${token}`,
         });
       } else {
         return res.status(202).json({
@@ -67,7 +71,7 @@ Doctorrouter.post("/signin", async (req, res) => {
 Doctorrouter.get("/findone", async (req, res) => {
   try {
     const { q } = req.query;
-    const doctor = await Doctor.findOne({Email:q});
+    const doctor = await Doctor.findOne({ Email: q });
     return res.status(211).json(doctor);
   } catch (err) {
     console.log(err);
@@ -75,11 +79,13 @@ Doctorrouter.get("/findone", async (req, res) => {
   }
 });
 
-
 Doctorrouter.post("/updateone", async (req, res) => {
   try {
     const { q } = req.query;
-    const doctor = await Doctor.updateOne({Email:q},{$set:{rating:req.body}});
+    const doctor = await Doctor.updateOne(
+      { Email: q },
+      { $set: { rating: req.body } }
+    );
   } catch (err) {
     console.log(err);
     return res.status(404).json({ msg: "error" });
@@ -89,7 +95,7 @@ Doctorrouter.post("/updateone", async (req, res) => {
 Doctorrouter.get("/profile", async (req, res) => {
   try {
     const token = req.headers.authentication;
-    const verifiedtoken = await jwt.verify(token, process.env.JWT_SECRET);
+    const verifiedtoken = await jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
     const doctor = await Doctor.findOne({ _id: verifiedtoken.id });
     return res.status(211).json(doctor);
   } catch (err) {
@@ -99,6 +105,7 @@ Doctorrouter.get("/profile", async (req, res) => {
     });
   }
 });
+
 Doctorrouter.get("/filter", async (req, res) => {
   try {
     const { q } = req.query;

@@ -23,7 +23,7 @@ Patientrouter.post("/signup", async (req, res) => {
       const user = await Patient.create(body);
       const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       return res.status(211).json({
-        jwt: token,
+        jwt: `patient ${token}`,
       });
     } else {
       res.status(202).json({
@@ -43,11 +43,11 @@ Patientrouter.post("/signin", async (req, res) => {
   } else {
     const isSafe = PatientsigninInput.safeParse(body);
 
-    if (isSafe.success) {
+    if (isSafe.success) {   
       if (bcyrpt.compare(body.Password, exists.Password)) {
         const token = jwt.sign({ id: exists._id }, process.env.JWT_SECRET);
         return res.status(211).json({
-          jwt: token,
+          jwt: `patient ${token}`,
         });
       } else {
         return res.status(202).json({
@@ -61,6 +61,24 @@ Patientrouter.post("/signin", async (req, res) => {
     }
   }
 });
+
+Patientrouter.get("/profile", async (req, res) => {
+  try {
+    const token = req.headers.authentication;
+
+    const verifiedtoken = await jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
+    const patient = await Patient.findOne({ _id: verifiedtoken.id });
+    return res.status(211).json(patient);
+  } catch (err) {
+    console.log(err);
+    return res.status(404).json({
+      msg: "error",
+    });
+  }
+});
+
+
+
 
 // Patientrouter.post("/appointment", async (req, res) => {
 //   const body = req.body;

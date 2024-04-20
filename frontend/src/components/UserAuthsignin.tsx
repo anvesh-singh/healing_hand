@@ -14,7 +14,7 @@ export const UserAuthsignin = () => {
   async function sendRequest() {
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/user/signin`,
+        `${BACKEND_URL}/patient/signin`,
         postInputs
       );
       if (response.status == 202) {
