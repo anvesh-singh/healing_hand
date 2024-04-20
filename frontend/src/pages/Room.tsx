@@ -2,8 +2,9 @@
 import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
+import '../css/Chat.css'
 
-const socket = io.connect("http://localhost:5005");
+const socket = io.connect("http://192.168.7.127:5005");
 
 export const Room = ()=>{
   const [username, setUsername] = useState("");
@@ -45,5 +46,3 @@ export const Room = ()=>{
     </div>
   );
 }
-
-// export default Room;

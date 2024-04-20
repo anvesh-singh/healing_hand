@@ -1,6 +1,7 @@
 //@ts-nocheck
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import '../css/Chat.css'
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -8,17 +9,14 @@ function Chat({ socket, username, room }) {
   const [count,setCount] = useState(1);
 
   const sendMessage = async () => {
-   // let x = 0;
+   let x = 0;
     if (currentMessage !== "") {
       const messageData = {
         id : count,
         room: room,
         author: username,
         message: currentMessage,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: new Date(Date.now()).getHours()+ " : " +new Date(Date.now()).getMinutes(),
       };
       setCount(count+1);
 
@@ -28,21 +26,14 @@ function Chat({ socket, username, room }) {
     }
   };
 
-  // const receiveMessageHandler = (data) => {
-  //   setMessageList((list) => [...list, data]);
-  // }
-
   useEffect(() => {
     socket.on("receive_message", (data) => {
     setMessageList((list) => [...list, data]);
     });
-//     // Add event listener
-// // socket.on("recieve_message", receiveMessageHandler);
 
-// Cleanup function to remove event listener when component unmounts or re-renders
-return () => {
-  socket.off("receive_message");
-};
+    return () => {
+      socket.off("receive_message");
+    };
   }, [socket]);
 
   return (

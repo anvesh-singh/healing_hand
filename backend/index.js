@@ -4,21 +4,10 @@ const app = express();
 const bodyparser=require('body-parser');
 const http = require("http");
 const server = http.createServer(app)
-const setUpSocketServer = require("./routes/videocall")
 app.use(cors());
 app.use(bodyparser.json());
 const { Server } = require("socket.io");
 const router = require("./routes/index");
-const videocall = require("./routes/videocall");
-const socketIO = require("socket.io")
-
-// app.use(
-//     cors({
-//       origin: "http://localhost:5173",
-//       methods: ["GET", "POST"],
-//       credentials: true,
-//     })
-//   );
 
   const io = new Server(server, {
     cors: {
@@ -27,16 +16,9 @@ const socketIO = require("socket.io")
     },
   });
 
-
 app.use("/", router);
-// app.get('/xxx',videocall);
 
-
-
-// // const setUpSocketServer = require("./routes/videocall")
-// setUpSocketServer(server);
-
-
+// chat app logic
 io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`);
   
@@ -56,10 +38,11 @@ io.on("connection", (socket) => {
 
 
 
-app.listen(6000,(err)=>{
+app.listen(3000,(err)=>{
     if(err)console.log("error ocurred");
-    console.log("server is listening on port 6000");
+    console.log("server is listening on port 3000");
 })
+// chat server listen
 server.listen(5005, () => console.log("server is running on port 5005"))
 
 
