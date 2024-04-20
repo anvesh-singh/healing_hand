@@ -59,7 +59,7 @@ export const SignupSwitchButton = () => {
         </div>
         <UserAuthsignup />
         <div className="flex justify-center">
-          <Googlebutton type={"signup"} link={"/user/signup"} />
+          <Googlebutton type={"signup"} link={"/patient/signup"} />
         </div>
       </div>
     );

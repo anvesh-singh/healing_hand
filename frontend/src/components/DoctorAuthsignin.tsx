@@ -23,8 +23,7 @@ export const DoctorAuthsignin = () => {
       } else {
         const jwt = response.data.jwt;
         localStorage.setItem("token", jwt);
-        console.log(jwt);
-        // navigate("/");
+        navigate("/");
       }
     } catch (e) {
       alert("Error while signing up");

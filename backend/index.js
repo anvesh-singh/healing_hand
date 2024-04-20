@@ -40,10 +40,10 @@ io.on("connection", (socket) => {
 
 app.listen(3000,(err)=>{
     if(err)console.log("error ocurred");
-    console.log("server is listening on port 3000");
+    console.log("app is listening on port 3000");
 })
 // chat server listen
-server.listen(5005, () => console.log("server is running on port 5005"))
+// server.listen(5005, () => console.log("server is running on port 5005"))
 
 
 
