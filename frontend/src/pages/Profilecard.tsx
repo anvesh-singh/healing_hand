@@ -6,7 +6,7 @@ import { BACKEND_URL } from "../config";
 
 import React from "react";
 import '../css/Profile.css'
-export const Profilecard = () => {
+export const Profilecard = ({id,link}) => {
 
     const [userProfile,setUserProfile]=useState({
                 FirstName: "",
@@ -19,9 +19,9 @@ export const Profilecard = () => {
             })
             useEffect(()=>{
                 const token=localStorage.getItem("token");
-                try{axios.get(`${BACKEND_URL}/${token.split(" ")[0]}/profile`,{
+                try{axios.get(`${BACKEND_URL}/${link}/profile`,{
                     headers:{
-                        "authentication":token
+                        "id":id
                     }
                 }).then( (response)=>{
                     const body=  response.data;
@@ -36,7 +36,6 @@ export const Profilecard = () => {
                             appointments: body.appointments
                         }
                     )
-                    console.log(userProfile);
                 })}
                 catch(err){
                     alert("error while loading profile please reload");

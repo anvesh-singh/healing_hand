@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { DoctorSigninInput } from "@anvesh-singh/common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-
 export const DoctorAuthsignin = () => {
   const navigate = useNavigate();
   const [postInputs, setPostInputs] = useState<DoctorSigninInput>({
@@ -13,7 +12,6 @@ export const DoctorAuthsignin = () => {
 
   async function sendRequest() {
     try {
-      console.log(postInputs);
       const response = await axios.post(
         `${BACKEND_URL}/doctor/signin`,
         postInputs
@@ -23,7 +21,7 @@ export const DoctorAuthsignin = () => {
       } else {
         const jwt = response.data.jwt;
         localStorage.setItem("token", jwt);
-        navigate("/");
+        navigate("/landing");
       }
     } catch (e) {
       alert("Error while signing up");

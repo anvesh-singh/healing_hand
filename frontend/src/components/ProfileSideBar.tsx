@@ -4,8 +4,9 @@ import axios from 'axios'
 import { BACKEND_URL } from "../config";
 import React from "react";
 import '../css/Profile.css'
+import { AppointmentButton } from "./AppointmentButton";
 
-export const ProfileSideBar=()=>{
+export const ProfileSideBar=({id,link})=>{
     const [userProfile,setUserProfile]=useState({
         FirstName: "",
         LastName: "",
@@ -17,9 +18,9 @@ export const ProfileSideBar=()=>{
     })
     useEffect(()=>{
         const token=localStorage.getItem("token");
-        try{axios.get(`${BACKEND_URL}/${token.split(" ")[0]}/profile`,{
+        try{axios.get(`${BACKEND_URL}/${link}/profile`,{
             headers:{
-                "authentication":token
+                id:id
             }
         }).then( (response)=>{
             const body=  response.data;
@@ -82,9 +83,14 @@ return (
                     <i className="fa fa-edit"></i> Edit profile
                   </a>
                 </li>
+                <li>
+                <AppointmentButton doctorid={id}/>
+                </li>
+                
               </ul>
             </div>
           </div>
+          
     </div>
 )
 }

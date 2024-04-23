@@ -2,8 +2,13 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import '../css/Chat.css'
-
+import { useNavigate } from "react-router-dom";
 function Chat({ socket, username, room }) {
+  if (typeof localStorage.getItem("token") === null) {
+    const navigate = useNavigate();
+    alert("please login/signup");
+    navigate("/signup");
+  }
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [count,setCount] = useState(1);

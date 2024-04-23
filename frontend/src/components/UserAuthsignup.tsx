@@ -26,7 +26,7 @@ export const UserAuthsignup = () => {
       }
        else  {const jwt = response.data.jwt;
         localStorage.setItem("token", jwt);
-        navigate("/");}
+        navigate("/landing");}
       
     } catch (e) {
       alert("Error while signing up");

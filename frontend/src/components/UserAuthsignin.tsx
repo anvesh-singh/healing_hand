@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { PatientSigninInput } from "@anvesh-singh/common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-
 export const UserAuthsignin = () => {
   const navigate = useNavigate();
   const [postInputs, setPostInputs] = useState<PatientSigninInput>({
@@ -22,7 +21,8 @@ export const UserAuthsignin = () => {
       } else {
         const jwt = response.data.jwt;
         localStorage.setItem("token", jwt);
-        navigate("/");
+        navigate("/landing");
+        
       }
     } catch (e) {
       alert("Error while signing up");

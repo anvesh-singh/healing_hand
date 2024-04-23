@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 const {Appointments}=require('./appointment')
-mongoose.connect("mongodb+srv://anveshsingh444:Anveshsingh01@cluster0.9hupwlq.mongodb.net/");
+mongoose.connect(process.env.BACKEND_URL);
 const doctorSchema = new mongoose.Schema({
     FirstName: {
         type: String,
@@ -34,6 +34,7 @@ const doctorSchema = new mongoose.Schema({
             ref: 'Appointment'
         }],
     rating:{
+        reviews:[String],
         avgrating:Number,
         totalrating:Number
     }

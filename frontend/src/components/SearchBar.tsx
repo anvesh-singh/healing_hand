@@ -2,8 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { SearchSkeletons } from "./SearchSkeletons";
 import { BACKEND_URL } from "../config";
-import { set } from "mongoose";
-
+import {Link} from 'react-router-dom'
 let loading=0;
 export const SearchBar = () => {
   const [search, Setsearch] = useState("");
@@ -88,8 +87,8 @@ export const SearchBar = () => {
       {doctors.map((d) => {
           return (
             <>
-              <a
-                href="#"
+              <Link
+                to={`/profile/${d._id}`}
                 className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
               >
                 <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
@@ -113,7 +112,7 @@ export const SearchBar = () => {
                     {d.address}
                   </p>
                 </div>
-              </a>
+              </Link>
             </>
           );
         })}

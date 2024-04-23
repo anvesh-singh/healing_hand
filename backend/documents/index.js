@@ -1,4 +1,7 @@
-module.exports=({patientname,doctorname,patientphone,doctorphone})=>{
+module.exports=({patientname,doctorname,patientphone,doctorphone,ChiefComplaints,
+Diagnostics,
+MedicinesPrescribed,
+DoctorsAdvice})=>{
     return (`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,33 +140,32 @@ module.exports=({patientname,doctorname,patientphone,doctorphone})=>{
         <!-- Chief Complaints section -->
         <div class="section-heading">Chief Complaints</div>
         <div class="content-section">
-            <p>Patient complains of headaches and fatigue.</p>
+            <p>${ChiefComplaints}</p>
         </div>
 
         <!-- Diagnostics section -->
         <div class="section-heading">Diagnostics</div>
         <div class="content-section">
-            <p>X-ray results: Normal</p>
-            <p>Blood tests: Elevated cholesterol levels</p>
+            <p>${Diagnostics}</p>
         </div>
 
         <!-- Medicines Prescribed section -->
         <div class="section-heading">Medicines Prescribed</div>
         <div class="content-section">
-            <p>1. Paracetamol - 500mg, 1 tablet twice daily</p>
-            <p>2. Simvastatin - 20mg, 1 tablet daily</p>
+            <p>${MedicinesPrescribed}</p>
         </div>
 
         <!-- Doctor's Advice section -->
         <div class="section-heading">Doctor's Advice</div>
         <div class="content-section">
-            <p>Get plenty of rest and avoid fatty foods.</p>
-            <p>Follow up in two weeks for a check-up.</p>
+            <p>${DoctorsAdvice}</p>
         </div>
 
         <!-- Signature section -->
         <div class="signature">
-            <p>Doctor's Signature</p>
+            <p>${doctorname}</p>
+            <p>${doctorphone}</p>
+            <p>HEALING HAND</p>
         </div>
     </div>
 </body>

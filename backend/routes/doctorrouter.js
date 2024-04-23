@@ -5,13 +5,15 @@ const pdf = require("html-pdf");
 const { Doctor } = require("../database/doctors");
 const pdftemplate = require("../documents/index");
 const bcrypt = require("bcrypt");
-
+const {uploadcloud}=require ('../controller/cloudinary')
 const {
   DoctorsignupInput,
   DoctorsigninInput,
 } = require("@anvesh-singh/common");
 
 const bodyParser = require("body-parser");
+const { Patient } = require("../database/patient");
+const Appointment = require("../database/appointment");
 
 Doctorrouter.use(bodyParser.urlencoded({ extended: true }));
 
@@ -74,7 +76,6 @@ Doctorrouter.get("/findone", async (req, res) => {
     const doctor = await Doctor.findOne({ Email: q });
     return res.status(211).json(doctor);
   } catch (err) {
-    console.log(err);
     return res.status(404).json({ msg: "error" });
   }
 });
@@ -87,19 +88,16 @@ Doctorrouter.post("/updateone", async (req, res) => {
       { $set: { rating: req.body } }
     );
   } catch (err) {
-    console.log(err);
     return res.status(404).json({ msg: "error" });
   }
 });
 
 Doctorrouter.get("/profile", async (req, res) => {
   try {
-    const token = req.headers.authentication;
-    const verifiedtoken = await jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
-    const doctor = await Doctor.findOne({ _id: verifiedtoken.id });
+    const id = req.headers.id;
+    const doctor = await Doctor.findOne({ _id: id });
     return res.status(211).json(doctor);
   } catch (err) {
-    console.log(err);
     return res.status(404).json({
       msg: "error",
     });
@@ -109,7 +107,7 @@ Doctorrouter.get("/profile", async (req, res) => {
 Doctorrouter.get("/filter", async (req, res) => {
   try {
     const { q } = req.query;
-    const keys = ["FirstName", "LastName"];
+    const keys = ["FirstName", "Email"];
 
     const doctors = await Doctor.find({});
     const filteredDoc = doctors.filter((item) => {
@@ -120,18 +118,30 @@ Doctorrouter.get("/filter", async (req, res) => {
 
     return res.status(211).json(filteredDoc);
   } catch (err) {
-    console.log(err);
     return res.status(404).json({ msg: "error" });
   }
 });
 Doctorrouter.post("/report", async (req, res) => {
-  pdf.create(pdftemplate(req.body), {}).toFile("report.pdf", (err) => {
+  pdf.create(pdftemplate(req.body), {}).toFile("./documents/report.pdf", async (err) => {
     if (err) return Promise.reject();
+    const url= await uploadcloud("./documents/report.pdf");
+    const r=req.headers.token;
+    const decoded=jwt.decode(r);
+    const patient=  await Patient.updateOne({_id:decoded.id}, { $push: { report: url} });
     return Promise.resolve();
   });
 });
-Doctorrouter.get("/report/download", (req, res) => {
-  res.sendFile(`C:/Users/91843/healing_hand/backend/report.pdf`);
+
+Doctorrouter.get("/getappointment", async (req, res) => {
+  try {
+    const id = req.headers.id;
+    const appointment = await Appointment.find({doctor:id})
+    return res.status(211).json(appointment);
+  } catch (err) {
+    return res.status(404).json({
+      msg: "error",
+    });
+  }
 });
 
 module.exports = Doctorrouter;

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {Patient} =require('../database/patient')
 const {Doctor} =require('../database/doctors')
-// mongoose.connect("");
+mongoose.connect(process.env.BACKEND_URL);
 const appointmentSchema = new mongoose.Schema({
   patient: {
     type: mongoose.Schema.Types.ObjectId,
@@ -26,7 +26,10 @@ const appointmentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
     // required: true
-  }
+  },
+    mode:String,
+    
+    token:String
 });
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);

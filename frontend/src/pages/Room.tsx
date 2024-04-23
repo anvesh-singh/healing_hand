@@ -3,10 +3,15 @@ import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
 import '../css/Chat.css'
-
-const socket = io.connect("http://192.168.7.127:5005");
+import { useNavigate } from "react-router-dom";
+const socket = io.connect("http://localhost:5005");
 
 export const Room = ()=>{
+  if (typeof localStorage.getItem("token") === null) {
+    const navigate = useNavigate();
+    alert("please login/signup");
+    navigate("/signup");
+  }
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
@@ -14,7 +19,6 @@ export const Room = ()=>{
   const joinRoom = () => {
     if (username !== "" && room !== "") {
       socket.emit("join_room", room);
-      console.log(room);
       setShowChat(true);
     }
   };

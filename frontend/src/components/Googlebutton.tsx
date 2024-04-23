@@ -38,7 +38,7 @@ export const Googlebutton = ({ type, link }) => {
         }
       }}
       onError={() => {
-        console.log("Login Failed");
+        alert("error")
       }}
     />
   );
