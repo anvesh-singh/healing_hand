@@ -7,8 +7,8 @@ const Appointment = require("../database/appointment");
 const { PatientsignupInput } = require("@anvesh-singh/common");
 const { PatientsigninInput } = require("@anvesh-singh/common");
 const bcyrpt = require("bcrypt");
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 Patientrouter.post("/signup", async (req, res) => {
   const body = req.body;
   const exists = await Patient.findOne({ Email: body.Email });
@@ -44,7 +44,7 @@ Patientrouter.post("/signin", async (req, res) => {
   } else {
     const isSafe = PatientsigninInput.safeParse(body);
 
-    if (isSafe.success) {   
+    if (isSafe.success) {
       if (bcyrpt.compare(body.Password, exists.Password)) {
         const token = jwt.sign({ id: exists._id }, process.env.JWT_SECRET);
         return res.status(211).json({
@@ -66,7 +66,7 @@ Patientrouter.post("/signin", async (req, res) => {
 Patientrouter.get("/profile", async (req, res) => {
   try {
     const id = req.headers.id;
-    const patient = await Patient.findOne({_id:id});
+    const patient = await Patient.findOne({ _id: id });
     return res.status(211).json(patient);
   } catch (err) {
     return res.status(404).json({
@@ -78,39 +78,45 @@ Patientrouter.get("/profile", async (req, res) => {
 Patientrouter.get("/getappointment", async (req, res) => {
   try {
     const id = req.headers.id;
-    const appointment = await Appointment.find({patient:id})
-    return res.status(211).json(appointment);    
+    const appointment = await Appointment.find({ patient: id });
+    return res.status(211).json(appointment);
   } catch (err) {
-
     return res.status(404).json({
       msg: "error",
     });
   }
 });
 
-
-
+Patientrouter.post("/otp", async (req, res) => {
+  try {
+    const otp=Math.floor((Math.random()*9000+1000));
+  } catch (err) {
+    return res.status(404).json({
+      msg: "error",
+    });
+  }
+});
 
 Patientrouter.post("/appointment", async (req, res) => {
   const body = req.body;
-  const decoded=jwt.decode(req.body.patienttoken);
+  const decoded = jwt.decode(req.body.patienttoken);
   try {
-    const find=await Appointment.findOne({
+    const find = await Appointment.findOne({
       patient: decoded.id,
       doctor: req.body.doctorid,
-      token:req.body.patienttoken,
-      mode:req.body.mode
+      token: req.body.patienttoken,
+      mode: req.body.mode,
     });
-    if(find){
+    if (find) {
       return res.status(202).json({
-        msg:"appointment already exists"
-      })
+        msg: "appointment already exists",
+      });
     }
     const created = await Appointment.create({
       patient: decoded.id,
       doctor: req.body.doctorid,
-      token:req.body.patienttoken,
-      mode:req.body.mode
+      token: req.body.patienttoken,
+      mode: req.body.mode,
     });
     res.status(201).json(created);
   } catch (err) {
@@ -119,20 +125,5 @@ Patientrouter.post("/appointment", async (req, res) => {
     });
   }
 });
-
-// userRouter.put('/',auth, async (req,res)=>{
-// const resp=await User.findOneAndUpdate({_id:req.body.username},{password:req.body.password,
-//   firstname:req.body.firstname,
-//   lastname:req.body.lastname
-// });
-// if(!resp){
-//   res.status(411).json({message: "Error while updating information"});
-// }
-// else {
-//   res.status(411).json({
-//     message: "Updated successfully"
-//   });
-// }
-// })
 
 module.exports = Patientrouter;

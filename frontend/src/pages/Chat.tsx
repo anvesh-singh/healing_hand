@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import '../css/Chat.css'
+import Chatcss from "../css/Chat.module.css";
 import { useNavigate } from "react-router-dom";
 function Chat({ socket, username, room }) {
   if (typeof localStorage.getItem("token") === null) {
@@ -11,19 +11,22 @@ function Chat({ socket, username, room }) {
   }
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  const [count,setCount] = useState(1);
+  const [count, setCount] = useState(1);
 
   const sendMessage = async () => {
-   let x = 0;
+    let x = 0;
     if (currentMessage !== "") {
       const messageData = {
-        id : count,
+        id: count,
         room: room,
         author: username,
         message: currentMessage,
-        time: new Date(Date.now()).getHours()+ " : " +new Date(Date.now()).getMinutes(),
+        time:
+          new Date(Date.now()).getHours() +
+          " : " +
+          new Date(Date.now()).getMinutes(),
       };
-      setCount(count+1);
+      setCount(count + 1);
 
       setMessageList((list) => [...list, messageData]);
       await socket.emit("send_message", messageData);
@@ -33,7 +36,7 @@ function Chat({ socket, username, room }) {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-    setMessageList((list) => [...list, data]);
+      setMessageList((list) => [...list, data]);
     });
 
     return () => {
@@ -42,23 +45,24 @@ function Chat({ socket, username, room }) {
   }, [socket]);
 
   return (
-    <div className="chat-window">
-      <div className="chat-header">
+    <div className={Chatcss.chat-window}>
+      <div className={Chatcss.chat-header}>
         <p>Live Chat</p>
       </div>
-      <div className="chat-body">
-        <ScrollToBottom className="message-container">
+      <div className={Chatcss.chat-body}>
+        <ScrollToBottom className={Chatcss.message-container}>
           {messageList.map((messageContent) => {
             return (
-              <div key={messageContent.id}
+              <div
+                key={messageContent.id}
                 className="message"
                 id={username === messageContent.author ? "you" : "other"}
               >
                 <div>
-                  <div className="message-content">
+                  <div className={Chatcss.message-content}>
                     <p>{messageContent.message}</p>
                   </div>
-                  <div className="message-meta">
+                  <div className={Chatcss.message-meta}>
                     <p id="time">{messageContent.time}</p>
                     <p id="author">{messageContent.author}</p>
                   </div>
@@ -68,7 +72,7 @@ function Chat({ socket, username, room }) {
           })}
         </ScrollToBottom>
       </div>
-      <div className="chat-footer">
+      <div className={Chatcss.chat-footer}>
         <input
           type="text"
           value={currentMessage}

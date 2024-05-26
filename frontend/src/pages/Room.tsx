@@ -2,11 +2,11 @@
 import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
-import '../css/Chat.css'
+import "../css/Chat.module.css";
 import { useNavigate } from "react-router-dom";
 const socket = io.connect("http://localhost:5005");
 
-export const Room = ()=>{
+export const Room = () => {
   if (typeof localStorage.getItem("token") === null) {
     const navigate = useNavigate();
     alert("please login/signup");
@@ -49,4 +49,4 @@ export const Room = ()=>{
       )}
     </div>
   );
-}
+};

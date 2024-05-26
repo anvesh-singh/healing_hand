@@ -7,14 +7,15 @@ export const SigninSwitchButton = () => {
   const [button, SetButton] = useState(0);
   if (button == 0) {
     return (
-      <div>
-        <div className="flex flex-row justify-center pt-10">
+      <div className="relative h-screen">
+        <div className="absolute top-[24vh] left-[52vw] flex gap-1">
           <button
             type="button"
             onClick={() => {
               SetButton(1);
             }}
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+            className="py-1 bg-[#AB98FF] border-[1px] border-black hover:border-[1px] hover:border-white hover:outline-3 hover:outline-white text-white px-6 transition duration-300 ease-out hover:bg-black hover:text-white focus:outline-2 focus:ring-white focus:ring-1 mt-6 "
+
           >
             User
           </button>
@@ -23,27 +24,27 @@ export const SigninSwitchButton = () => {
             onClick={() => {
               SetButton(0);
             }}
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+            className="py-1 border-[1px] hover:border-white  border-gray-600 hover:outline-3 hover:outline-white text-white px-6 transition duration-300 ease-out bg-black hover:text-white focus:outline-2 focus:ring-white focus:ring-1 mt-6"
           >
             Doctor
           </button>
         </div>
         <DoctorAuthsignin />
-        <div className="flex justify-center">
+        <div className="absolute top-[70.8vh] left-[47.8vw]">
           <Googlebutton type={"signin"} link={"/doctor/signin"} />
         </div>
       </div>
     );
   } else {
     return (
-      <div>
-        <div className="flex flex-row justify-center pt-10">
+      <div className="relative h-screen">
+        <div className="absolute top-[24vh] left-[52vw] flex gap-1">
           <button
             type="button"
             onClick={() => {
               SetButton(1);
             }}
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+            className="py-1 border-[1px] hover:border-white  border-gray-600 hover:outline-3 hover:outline-white text-white px-6 transition duration-300 ease-out bg-black hover:text-white focus:outline-2 focus:ring-white focus:ring-1 mt-6"
           >
             User
           </button>
@@ -52,13 +53,13 @@ export const SigninSwitchButton = () => {
             onClick={() => {
               SetButton(0);
             }}
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+            className="py-1 bg-[#AB98FF] border-[1px] border-black hover:border-[1px] hover:border-white hover:outline-3 hover:outline-white text-white px-6 transition duration-300 ease-out hover:bg-black hover:text-white focus:outline-2 focus:ring-white focus:ring-1 mt-6 "
           >
             Doctor
           </button>
         </div>
         <UserAuthsignin />
-        <div className="flex justify-center">
+        <div className="absolute top-[70.8vh] left-[47.8vw]">
           <Googlebutton type={"signin"} link={"/patient/signin"} />
         </div>
       </div>
@@ -66,4 +67,3 @@ export const SigninSwitchButton = () => {
   }
 };
 
-export default SigninSwitchButton;

@@ -9,7 +9,7 @@ export const Appointments = () => {
   const [patientname, setPatientname] = useState({});
   const [doctorname, setDoctorname] = useState({});
   const [mode, setmode] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     try {
       axios
@@ -43,15 +43,13 @@ export const Appointments = () => {
         doctorid: doctorid,
         mode: mode,
       });
-      if(response.status==202){
-        alert(response.data.msg
-        );
-        navigate('/');
-      }     
-      else {alert("appointment created");
-      navigate('/');
-    }
-      
+      if (response.status == 202) {
+        alert(response.data.msg);
+        navigate("/");
+      } else {
+        alert("appointment created");
+        navigate("/");
+      }
     } catch (err) {
       alert("error! please try again");
     }

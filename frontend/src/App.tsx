@@ -17,6 +17,7 @@ import { Nomatch } from './components/Nomatch'
 import { RequireAuth } from './components/RequireAuth'
 import { GetReport } from './pages/GetReport'
 import { GetAppointment } from './components/GetAppointment'
+import { Home } from './pages/Home'
 function App() {
 
   return (
@@ -24,14 +25,14 @@ function App() {
       
       <BrowserRouter>
         <Routes>
-        <Route path="/landing" element={<Landing/>} />
-        <Route path="/" element={<SearchBar />} />
+        <Route path="/" element={<Home/>} />
+        <Route path="/home" element={<SearchBar />} />
         <Route path="/nav" element={<NavBar />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/profile/:doctor" element={<RequireAuth><DocProfile/></RequireAuth>} />
           <Route path="/appointment/:patienttoken/:doctorid" element={<RequireAuth><Appointments/></RequireAuth>} />
-          <Route path="/u" element={<RequireAuth><Notepad/></RequireAuth>} />
+          {/* <Route path="/u" element={<RequireAuth><Notepad/></RequireAuth>} /> */}
         <Route path="/xxx" element={<RequireAuth><Room/></RequireAuth>} />
           <Route path="/userprofile" element={<RequireAuth><Profile/></RequireAuth>}/>
           <Route path="/getreport" element={<RequireAuth><GetReport/></RequireAuth>}/>

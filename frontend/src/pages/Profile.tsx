@@ -6,8 +6,14 @@ export const Profile = () => {
   const decodedHeader = jwtDecode(localStorage.getItem("token")?.split(" ")[1]);
   return (
     <div className="flex">
-      <ProfileSideBar id={decodedHeader.id} link={localStorage.getItem("token")?.split(" ")[0]}/>
-      <Profilecard id={decodedHeader.id} link={localStorage.getItem("token")?.split(" ")[0]}/>
+      <ProfileSideBar
+        id={decodedHeader.id}
+        link={localStorage.getItem("token")?.split(" ")[0]}
+      />
+      <Profilecard
+        id={decodedHeader.id}
+        link={localStorage.getItem("token")?.split(" ")[0]}
+      />
     </div>
   );
 };

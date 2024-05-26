@@ -5,7 +5,7 @@ const pdf = require("html-pdf");
 const { Doctor } = require("../database/doctors");
 const pdftemplate = require("../documents/index");
 const bcrypt = require("bcrypt");
-const {uploadcloud}=require ('../controller/cloudinary')
+const { uploadcloud } = require("../controller/cloudinary");
 const {
   DoctorsignupInput,
   DoctorsigninInput,
@@ -122,20 +122,25 @@ Doctorrouter.get("/filter", async (req, res) => {
   }
 });
 Doctorrouter.post("/report", async (req, res) => {
-  pdf.create(pdftemplate(req.body), {}).toFile("./documents/report.pdf", async (err) => {
-    if (err) return Promise.reject();
-    const url= await uploadcloud("./documents/report.pdf");
-    const r=req.headers.token;
-    const decoded=jwt.decode(r);
-    const patient=  await Patient.updateOne({_id:decoded.id}, { $push: { report: url} });
-    return Promise.resolve();
-  });
+  pdf
+    .create(pdftemplate(req.body), {})
+    .toFile("./documents/report.pdf", async (err) => {
+      if (err) return Promise.reject();
+      const url = await uploadcloud("./documents/report.pdf");
+      const r = req.headers.token;
+      const decoded = jwt.decode(r);
+      const patient = await Patient.updateOne(
+        { _id: decoded.id },
+        { $push: { report: url } }
+      );
+      return Promise.resolve();
+    });
 });
 
 Doctorrouter.get("/getappointment", async (req, res) => {
   try {
     const id = req.headers.id;
-    const appointment = await Appointment.find({doctor:id})
+    const appointment = await Appointment.find({ doctor: id });
     return res.status(211).json(appointment);
   } catch (err) {
     return res.status(404).json({

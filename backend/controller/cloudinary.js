@@ -16,7 +16,6 @@ const uploadcloud = async (path) => {
       return response.url;
     }
   } catch (err) {
-
     fs.unlinkSync(path);
     return null;
   }

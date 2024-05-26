@@ -1,8 +1,14 @@
-module.exports=({patientname,doctorname,patientphone,doctorphone,ChiefComplaints,
-Diagnostics,
-MedicinesPrescribed,
-DoctorsAdvice})=>{
-    return (`<!DOCTYPE html>
+module.exports = ({
+  patientname,
+  doctorname,
+  patientphone,
+  doctorphone,
+  ChiefComplaints,
+  Diagnostics,
+  MedicinesPrescribed,
+  DoctorsAdvice,
+}) => {
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -170,4 +176,5 @@ DoctorsAdvice})=>{
     </div>
 </body>
 </html>
-`)}
+`;
+};

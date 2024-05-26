@@ -1,9 +1,9 @@
 //@ts-nocheck
 import axios from "axios";
 import { saveAs } from "file-saver";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../config";
-import "../css/Report.css";
+import "../css/Report.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 export const Report = () => {
@@ -13,35 +13,38 @@ export const Report = () => {
     patientname: "",
     doctorphone: "",
     patientphone: "",
-    ChiefComplaints:"",
-    Diagnostics:"",
-    MedicinesPrescribed:"",
-    DoctorsAdvice:""
+    ChiefComplaints: "",
+    Diagnostics: "",
+    MedicinesPrescribed: "",
+    DoctorsAdvice: "",
   });
-  useEffect(()=>{
-    const p=async()=>{
-      try{
-      const decode=jwtDecode(patienttoken);
-      const response=await axios.get(`${BACKEND_URL}/patient/profile`,{
-        headers:{
-          id:decode.id
-        }
-      })
-      const response2=await axios.get(`${BACKEND_URL}/doctor/profile`,{
-        headers:{
-          id:doctorid
-        }
-      })
-      setdetails({
-        ...details,doctorname:response2.data.FirstName,doctorphone:response2.data.Phone,patientname:response.data.FirstName,patientphone:response.data.Phone
-      })}
-      catch(err){
+  useEffect(() => {
+    const p = async () => {
+      try {
+        const decode = jwtDecode(patienttoken);
+        const response = await axios.get(`${BACKEND_URL}/patient/profile`, {
+          headers: {
+            id: decode.id,
+          },
+        });
+        const response2 = await axios.get(`${BACKEND_URL}/doctor/profile`, {
+          headers: {
+            id: doctorid,
+          },
+        });
+        setdetails({
+          ...details,
+          doctorname: response2.data.FirstName,
+          doctorphone: response2.data.Phone,
+          patientname: response.data.FirstName,
+          patientphone: response.data.Phone,
+        });
+      } catch (err) {
         slert("error");
       }
-    }
-     p().then((res)=>{
-     });
-  },[])
+    };
+    p().then((res) => {});
+  }, []);
   const createreport = async () => {
     try {
       const response3 = await axios.post(
@@ -62,19 +65,19 @@ export const Report = () => {
         <form>
           <div className="input-group">
             <label for="patientName">Patient Name</label>
-          {details.patientname}
+            {details.patientname}
           </div>
           <div className="input-group">
             <label for="patientPhone">Patient Phone</label>
-          {details.patientphone}
+            {details.patientphone}
           </div>
           <div className="input-group">
             <label for="doctorName">Doctor Name</label>
-          {details.doctorname}           {details.doctorphone}
+            {details.doctorname} {details.doctorphone}
           </div>
           <div className="input-group">
             <label for="doctorPhone">Doctor Phone</label>
-          {details.doctorphone}
+            {details.doctorphone}
           </div>
           <div className="input-group">
             <label for="chiefComplaints">Chief Complaints</label>
@@ -82,10 +85,12 @@ export const Report = () => {
               id="chiefComplaints"
               name="chiefComplaints"
               rows="4"
-              required onChange={(e)=>{
+              required
+              onChange={(e) => {
                 setdetails({
-                  ...details,ChiefComplaints:e.target.value
-                })
+                  ...details,
+                  ChiefComplaints: e.target.value,
+                });
               }}
             ></textarea>
           </div>
@@ -95,10 +100,12 @@ export const Report = () => {
               id="diagnostics"
               name="diagnostics"
               rows="4"
-              required onChange={(e)=>{
+              required
+              onChange={(e) => {
                 setdetails({
-                  ...details,Diagnostics:e.target.value
-                })
+                  ...details,
+                  Diagnostics: e.target.value,
+                });
               }}
             ></textarea>
           </div>
@@ -108,10 +115,12 @@ export const Report = () => {
               id="medicinesPrescribed"
               name="medicinesPrescribed"
               rows="4"
-              required onChange={(e)=>{
+              required
+              onChange={(e) => {
                 setdetails({
-                  ...details,MedicinesPrescribed:e.target.value
-                })
+                  ...details,
+                  MedicinesPrescribed: e.target.value,
+                });
               }}
             ></textarea>
           </div>
@@ -121,14 +130,18 @@ export const Report = () => {
               id="doctorsAdvice"
               name="doctorsAdvice"
               rows="4"
-              required onChange={(e)=>{
+              required
+              onChange={(e) => {
                 setdetails({
-                  ...details,DoctorsAdvice:e.target.value
-                })
+                  ...details,
+                  DoctorsAdvice: e.target.value,
+                });
               }}
             ></textarea>
           </div>
-          <button type="submit" onClick={createreport}>Submit</button>
+          <button type="submit" onClick={createreport}>
+            Submit
+          </button>
         </form>
       </div>
     </div>

@@ -30,7 +30,7 @@ export const Googlebutton = ({ type, link }) => {
           } else {
             const jwt = response.data.jwt;
             localStorage.setItem("token", jwt);
-            navigate("/");
+            navigate("/home");
           }
         } catch (e) {
           alert("Error while signing up");
@@ -38,7 +38,7 @@ export const Googlebutton = ({ type, link }) => {
         }
       }}
       onError={() => {
-        alert("error")
+        alert("error");
       }}
     />
   );

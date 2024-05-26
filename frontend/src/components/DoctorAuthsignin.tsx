@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { DoctorSigninInput } from "@anvesh-singh/common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { TiArrowBackOutline } from "react-icons/ti";
+
+
 export const DoctorAuthsignin = () => {
   const navigate = useNavigate();
   const [postInputs, setPostInputs] = useState<DoctorSigninInput>({
@@ -12,6 +15,7 @@ export const DoctorAuthsignin = () => {
 
   async function sendRequest() {
     try {
+      console.log(postInputs);
       const response = await axios.post(
         `${BACKEND_URL}/doctor/signin`,
         postInputs
@@ -21,7 +25,7 @@ export const DoctorAuthsignin = () => {
       } else {
         const jwt = response.data.jwt;
         localStorage.setItem("token", jwt);
-        navigate("/landing");
+        navigate("/home");
       }
     } catch (e) {
       alert("Error while signing up");
@@ -30,23 +34,25 @@ export const DoctorAuthsignin = () => {
   }
 
   return (
-    <div className="h-screen flex justify-center flex-col">
+    <div className="h-screen flex justify-center text-white flex-col bg-black">
       <div className="flex justify-center">
         <div>
-          <div className="px-10">
-            <div className="text-3xl font-extrabold pl-10">
+          <div className="">
+            <div className="text-[25px] flex items-center gap-3 font-light tracking-wider py-4 border-b-[1px] border-gray-500 mb-5">
+            <Link to="/signup" className="hover:scale-x-110"><TiArrowBackOutline /></Link>
               Sign In as Doctor
             </div>
-            <div className="text-slate-500  ">
+            <div className="text-slate-200 py-3 px-4 text-sm mt-2 flex gap-2 border-gray-300 border hover:border-white">
               Don't have an account?
-              <Link className="pl-2 underline" to="/signup">
+              <Link className="underline hover:text-white hover:scale-95" to="/signup">
                 Sign up
               </Link>
             </div>
           </div>
-          <div className="pt-8">
+          <div className="pt-2 w-[30vw]">
             <LabelledInput
               label="Email"
+              type="email"
               placeholder="anveshsingh@gmail.com"
               onChange={(e) => {
                 setPostInputs({
@@ -69,7 +75,7 @@ export const DoctorAuthsignin = () => {
             <button
               onClick={sendRequest}
               type="button"
-              className="mt-8 w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+              className="py-2 bg-[#AB98FF] border-[1px] border-black hover:border-[1px] hover:border-white hover:outline-3 hover:outline-white text-white px-6 transition duration-300 ease-out hover:bg-black hover:text-white focus:outline-2 focus:ring-white focus:ring-1 mt-6"
             >
               Sign in
             </button>
@@ -86,24 +92,22 @@ interface LabelledInputType {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
 }
-
 function LabelledInput({
   label,
-  placeholder,
   onChange,
   type,
 }: LabelledInputType) {
   return (
-    <div>
-      <label className="block mb-2 text-sm text-black font-semibold pt-4">
+    <div className="mb-4">
+      <label className="block mb-2 text-sm text-white font-normal tracking-wider pt-4">
         {label}
       </label>
       <input
         onChange={onChange}
         type={type || "text"}
         id="first_name"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        placeholder={placeholder}
+        className="w-full py-3 px-3 font-thin border-gray-400 hover:border-white text-sm border-[1px] hover: text-white dark:bg-black"
+        
         required
       />
     </div>
